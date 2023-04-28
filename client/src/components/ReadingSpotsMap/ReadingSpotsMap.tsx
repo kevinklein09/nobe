@@ -19,7 +19,7 @@ function ReadingSpotsMap() {
   // console.log("latlng data", latlng);
   const [address, setAddress] = useState<string>("");
   // console.log("address data", address);
-
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [showInfoWindow, setShowInfoWindow] = useState(false);
   const [savedPlaces, setSavedPlaces] = useState<Place[]>([]);
   // console.log("saved places:", savedPlaces);
@@ -45,8 +45,14 @@ function ReadingSpotsMap() {
     fetchSavedPlaces();
   }, []);
 
-  const handleMarkerClick = useCallback(() => {
-    setShowInfoWindow((prev) => !prev);
+  const handleMarkerClick = useCallback((place: Place) => {
+    setSelectedPlace(place);
+    // setShowInfoWindow(true);
+  }, []);
+
+  const handleInfoWindowClose = useCallback(() => { // NEW HANDLER
+    setSelectedPlace(null);
+    // setShowInfoWindow(false);
   }, []);
 
   return (
@@ -72,14 +78,15 @@ function ReadingSpotsMap() {
           {latlng && (
             <Marker
               position={latlng}
-              onClick={handleMarkerClick}
+              // draggable={true}
+              onClick={() => setSelectedPlace(null)}
               icon={{
                 url: "http://maps.google.com/mapfiles/kml/shapes/library_maps.png",
               }}
             >
               {showInfoWindow && (
                 <InfoWindow
-                  onCloseClick={handleMarkerClick}
+                  onCloseClick={() => setShowInfoWindow(false)}
                   position={latlng}
                   options={{ maxWidth: 150 }}
                 >
@@ -96,8 +103,17 @@ function ReadingSpotsMap() {
               icon={{
                 url: "http://maps.google.com/mapfiles/kml/shapes/library_maps.png",
               }}
+              onClick={() => handleMarkerClick(place)}
             >
-
+              {selectedPlace?.id === place.id && ( // NEW: SHOW INFO WINDOW IF THE MARKER'S PLACE IS SELECTED
+                <InfoWindow
+                  onCloseClick={handleInfoWindowClose}
+                  position={{ lat: place.Lat, lng: place.Long }}
+                  options={{ maxWidth: 150 }}
+                >
+                  <div>{place.Location}</div>
+                </InfoWindow>
+              )}
             </Marker>
           ))}
         </GoogleMap>
