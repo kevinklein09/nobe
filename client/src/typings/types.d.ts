@@ -10,6 +10,8 @@ interface DiscussionPost {
   discussionId: string;
 }
 interface Place {
+  userPlaces: any;
+  User_Places: any;
   place_id: any;
   googlePlaceId: string;
   formatted_address: string;
@@ -58,5 +60,6 @@ interface Cuisine {
 }
 interface Review {
   author_name: string;
+  review: string;
   text: string;
 }
