@@ -18,6 +18,7 @@ export interface Club {
 
 function Clubs() {
   const [clubs, setClubs] = useState<Club[]>([]);
+  console.log(clubs);
 
   useEffect(() => {
     async function fetchClubs() {
@@ -25,7 +26,7 @@ function Clubs() {
       setClubs(response.data);
     }
     fetchClubs();
-  }, []);
+  }, [clubs]);
 
   const CardContainer = styled.div`
   display: flex;
