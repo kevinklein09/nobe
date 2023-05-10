@@ -64,7 +64,7 @@ function ClubDiscussion() {
       setShowForm(false);
     } catch (error) {
       console.error(error);
-    } finally { console.log(discussions); }
+    }
   };
 
   return (
