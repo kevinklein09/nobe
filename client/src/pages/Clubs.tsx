@@ -5,7 +5,6 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import CreateClubs from '../components/CreateClubs/CreateClubs';
 import { ClubHeader } from './style';
 
