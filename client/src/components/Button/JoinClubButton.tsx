@@ -43,11 +43,9 @@ function JoinClubButton(props: any) {
     if (member) {
       setColor('primary' as CustomColor);
     }
-  }, []);
+  }, [member]);
 
   return (
-
-  // <Tooltip title={toolTip} placement="top">
     <Button
       aria-label="Join Club"
       size="medium"
@@ -57,8 +55,6 @@ function JoinClubButton(props: any) {
     >
       {color === 'primary' ? 'Leave Club' : 'Join Club'}
     </Button>
-  // </Tooltip>
-
   );
 }
 

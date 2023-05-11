@@ -14,6 +14,10 @@ import '../styles/clubDiscussionStyle.css';
 import DiscussionList from '../components/DiscussionForum/Discussions';
 import UserContext from '../hooks/Context';
 
+interface Club {
+  clubId: string
+}
+
 function ClubDiscussion() {
   const { id } = useParams<{ id: string }>();
   const [discussions, setDiscussions] = useState<Discussion[]>([]);
@@ -27,6 +31,14 @@ function ClubDiscussion() {
   const userContext = useContext(UserContext);
   const user = userContext?.user;
   const userId = user?.id;
+
+  const member = user.clubMembers?.reduce((acc: boolean, club: Club) => {
+    if (club.clubId === clubId) {
+      acc = true;
+      return acc;
+    }
+    return acc;
+  }, false);
 
   useEffect(() => {
     async function fetchDiscussion() {
@@ -45,8 +57,6 @@ function ClubDiscussion() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      // const user = localStorage.getItem('user');
-
       if (!user) {
         throw new Error('No user found');
       }
@@ -54,7 +64,10 @@ function ClubDiscussion() {
         alert('Please enter a discussion title');
         return;
       }
-      // const parsed = JSON.parse(user);
+      if (!member) {
+        alert('Not a member of this club');
+        return;
+      }
       const response = await axios.post(`/api/clubs/${id}/discussion`, {
         title: newDiscussionTitle,
         userId,
