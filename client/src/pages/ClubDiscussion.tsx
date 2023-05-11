@@ -33,7 +33,7 @@ function ClubDiscussion() {
   const user = userContext?.user;
   const userId = user?.id;
 
-  const member = user.clubMembers?.reduce((acc: boolean, club: Club) => {
+  const member = user?.clubMembers?.reduce((acc: boolean, club: Club) => {
     if (club.clubId === clubId) {
       acc = true;
       return acc;
