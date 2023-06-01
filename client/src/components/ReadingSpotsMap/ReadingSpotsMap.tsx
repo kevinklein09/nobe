@@ -127,7 +127,6 @@ function ReadingSpotsMap(props: ReadingSpotsProps) {
           <h3 className="top-spots-header">Top Spots</h3>
           <List className="cards-container">
             {savedPlaces?.map((place) => (
-
               <ListItemButton
                 key={place.id}
                 onClick={() => handleCardClick(place.Lat, place.Long, place)}
